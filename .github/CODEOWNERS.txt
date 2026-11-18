@@ -1,0 +1,4 @@
+# Default owner for the entire project
+* @YidrissAbbou
+# Protect the ownership configuration itself
+/.github/CODEOWNERS @idrissAbbou
