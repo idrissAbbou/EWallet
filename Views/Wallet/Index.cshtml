@@ -1,0 +1,96 @@
+@model EWallet.ViewModels.WalletViewModel
+
+@{
+  ViewData["Title"] = "My Wallet";
+}
+
+<div class="container py-5">
+
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h2 class="fw-bold">My Wallet</h2>
+      <p class="text-muted mb-0">Manage your digital wallet</p>
+    </div>
+  </div>
+
+  @if (!Model.HasAccount)
+  {
+    <div class="alert alert-warning">
+      <h5>Wallet not available</h5>
+      <p class="mb-0">
+        Your wallet has not been created yet.
+        Please contact the administrator.
+      </p>
+    </div>
+  }
+  else
+  {
+    <div class="row g-4">
+
+      <!-- Balance Card -->
+      <div class="col-md-7">
+        <div class="card border-0 shadow-sm text-white bg-primary">
+          <div class="card-body p-4">
+
+            <p class="mb-2 opacity-75">Available Balance</p>
+
+            <h1 class="display-4 fw-bold">
+              @Model.Solde.ToString("N2")
+              <span class="fs-4">@Model.Devise</span>
+            </h1>
+
+            <hr class="border-light opacity-25" />
+
+            <div class="d-flex justify-content-between">
+              <div>
+                <small class="opacity-75">Account Number</small>
+                <div class="fw-semibold">
+                  @Model.NumeroCompte
+                </div>
+              </div>
+
+              <div class="text-end">
+                <small class="opacity-75">Status</small>
+                <div>
+                  <span class="badge bg-light text-dark">
+                    @Model.Statut
+                  </span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Account Information -->
+      <div class="col-md-5">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-body p-4">
+
+            <h5 class="fw-bold mb-4">Account Information</h5>
+
+            <div class="mb-3">
+              <small class="text-muted">Account Type</small>
+              <div class="fw-semibold">Wallet</div>
+            </div>
+
+            <div class="mb-3">
+              <small class="text-muted">Currency</small>
+              <div class="fw-semibold">@Model.Devise</div>
+            </div>
+
+            <div>
+              <small class="text-muted">Creation Date</small>
+              <div class="fw-semibold">
+                @Model.DateCreation.ToString("dd/MM/yyyy")
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  }
+</div>
