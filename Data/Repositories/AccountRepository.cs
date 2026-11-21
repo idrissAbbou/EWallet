@@ -78,4 +78,34 @@ public class AccountRepository
       Statut = reader.GetString(7)
     };
   }
+  public async Task<List<Account>> GetAllAsync()
+  {
+    var accounts = new List<Account>();
+
+    const string query = "SELECT * FROM Accounts ORDER BY id_account DESC";
+
+    await using var connection = _connectionFactory.CreateConnection();
+    await connection.OpenAsync();
+
+    await using var command = new SqlCommand(query, connection);
+    await using var reader = await command.ExecuteReaderAsync();
+
+    while (await reader.ReadAsync())
+    {
+        accounts.Add(new Account
+        {
+            IdAccount = reader.GetInt32(0),
+            IdUser = reader.GetInt32(1),
+            NumeroCompte = reader.GetString(2),
+            TypeAccount = reader.GetString(3),
+            Solde = reader.GetDecimal(4),
+            Devise = reader.GetString(5),
+            DateCreation = reader.GetDateTime(6),
+            Statut = reader.GetString(7)
+        });
+    }
+
+    return accounts;
+  }
+
 }

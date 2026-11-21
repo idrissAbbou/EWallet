@@ -33,10 +33,10 @@ public static class IdentitySeeder
     }
 
     // 2. Read Admin credentials from User Secrets
-    var email = configuration["Admin:Email"];
-    var password = configuration["Admin:Password"];
-    var nom = configuration["Admin:Nom"] ?? "Administrator";
-    var prenom = configuration["Admin:Prenom"] ?? "System";
+        var email = configuration["Admin:Email"];
+        var password = configuration["Admin:Password"];
+        var nom = configuration["Admin:Nom"] ?? "Administrator";
+        var prenom = configuration["Admin:Prenom"] ?? "System";
 
     if (string.IsNullOrWhiteSpace(email) ||
         string.IsNullOrWhiteSpace(password))
