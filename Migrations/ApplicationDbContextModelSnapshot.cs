@@ -255,7 +255,10 @@ namespace EWallet.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("IdAccount")
+                    b.Property<int>("IdAccountDestinataire")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdAccountEmetteur")
                         .HasColumnType("int");
 
                     b.Property<int>("IdCategorie")
@@ -265,6 +268,10 @@ namespace EWallet.Migrations
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("Statut")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("TypeTransaction")
                         .IsRequired()
                         .HasMaxLength(20)
@@ -272,7 +279,9 @@ namespace EWallet.Migrations
 
                     b.HasKey("IdTransaction");
 
-                    b.HasIndex("IdAccount");
+                    b.HasIndex("IdAccountDestinataire");
+
+                    b.HasIndex("IdAccountEmetteur");
 
                     b.HasIndex("IdCategorie");
 
@@ -444,10 +453,16 @@ namespace EWallet.Migrations
 
             modelBuilder.Entity("EWallet.Models.Transaction", b =>
                 {
-                    b.HasOne("EWallet.Models.Account", "Account")
+                    b.HasOne("EWallet.Models.Account", "AccountDestinataire")
                         .WithMany()
-                        .HasForeignKey("IdAccount")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("IdAccountDestinataire")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("EWallet.Models.Account", "AccountEmetteur")
+                        .WithMany()
+                        .HasForeignKey("IdAccountEmetteur")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("EWallet.Models.Category", "Category")
@@ -456,7 +471,9 @@ namespace EWallet.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Account");
+                    b.Navigation("AccountDestinataire");
+
+                    b.Navigation("AccountEmetteur");
 
                     b.Navigation("Category");
                 });

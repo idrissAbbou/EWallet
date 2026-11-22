@@ -1,0 +1,134 @@
+@model List<EWallet.Models.FraudDetection>
+@{
+    ViewData["Title"] = "Détection de Fraude";
+}
+
+<div class="container mt-4">
+    @* --- 2. NOTIFICATIONS --- *@
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show">
+            <strong>@TempData["Error"]</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show">
+            <strong>@TempData["Success"]</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>🛡️ Détection de Fraude</h2>
+        <a asp-action="Test" class="btn btn-warning">🧪 Tester une Fraude (45000  MAD)</a>
+    </div>
+
+    @* --- 4. STATISTIQUES / DASHBOARD --- *@
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card text-white bg-primary">
+                <div class="card-body">
+                    <h5>Total Alertes</h5>
+                    <h2>@ViewBag.TotalAlertes</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-danger">
+                <div class="card-body">
+                    <h5>Bloquées (70-100)</h5>
+                    <h2>@ViewBag.Bloquees</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-warning">
+                <div class="card-body">
+                    <h5>Cette Semaine</h5>
+                    <h2>@ViewBag.CetteSemaine</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-success">
+                <div class="card-body">
+                    <h5>Montant Bloqué</h5>
+                    <h2>@ViewBag.MontantBloque MAD</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* --- GRAPHIQUE --- *@
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5>Répartition des Alertes</h5>
+            <canvas id="chartFraude" height="80"></canvas>
+        </div>
+    </div>
+
+    @* --- TABLEAU --- *@
+    <div class="card">
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th># Transaction</th>
+                        <th>Montant</th>
+                        <th>Score / 100</th>
+                        <th>Raison (Règles déclenchées)</th>
+                        <th>Decision IA</th>
+                        <th>Date Détection</th>
+                        <th>Statut</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var f in Model)
+                    {
+                        var badge = f.ScoreRisque >= 70 ? "bg-danger" : f.ScoreRisque >= 30 ? "bg-warning text-dark" : "bg-success";
+                        var statut = f.Transaction?.Statut ?? "-";
+                        <tr>
+                            <td>#@f.IdTransaction</td>
+                            <td>@(f.Transaction?.Montant) MAD</td>
+                            <td><span class="badge @badge">@f.ScoreRisque / 100</span></td>
+                            <td>@f.Raison</td>
+                            <td>
+                                @if (f.DecisionIA == "1" || f.DecisionIA == "Bloquee")
+                                { <span class="badge bg-danger">1 = Suspecte</span> }
+                                else
+                                { <span class="badge bg-success">0 = Normale</span> }
+                            </td>
+                            <td>@f.DateDetection.ToString("dd/MM/yyyy HH:mm")</td>
+                            <td><span class="badge bg-dark">@statut</span></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @if (!Model.Any())
+            {
+                <p class="text-center text-muted">Aucune alerte pour le moment.</p>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('chartFraude');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Total', 'Bloquées', 'Cette Semaine'],
+            datasets: [{
+                label: 'Alertes',
+                data: [@ViewBag.TotalAlertes, @ViewBag.Bloquees, @ViewBag.CetteSemaine],
+                backgroundColor: ['#0d6efd', '#dc3545', '#ffc107']
+            }]
+        },
+        options: { scales: { y: { beginAtZero: true } } }
+    });
+</script>
+}

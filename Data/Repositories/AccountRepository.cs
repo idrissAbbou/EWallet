@@ -18,9 +18,9 @@ public class AccountRepository
         "EW" + Guid.NewGuid().ToString("N")[..16].ToUpperInvariant();
 
     const string query = @"
-            INSERT INTO Accounts (id_user, numero_compte)
-            OUTPUT INSERTED.id_account
-            VALUES (@UserId, @AccountNumber);
+            INSERT INTO Accounts ([IdUser], [NumeroCompte], [TypeAccount], [Solde], [Devise], [DateCreation], [Statut])
+            OUTPUT INSERTED.[IdAccount]
+            VALUES (@UserId, @AccountNumber, 'Courant', 0, 'MAD', GETDATE(), 'Actif');
         ";
 
     await using var connection =
@@ -39,17 +39,9 @@ public class AccountRepository
   public async Task<Account?> GetByUserIdAsync(int userId)
   {
     const string query = @"
-            SELECT
-                id_account,
-                id_user,
-                numero_compte,
-                type_account,
-                solde,
-                devise,
-                date_creation,
-                statut
+            SELECT [IdAccount], [IdUser], [NumeroCompte], [TypeAccount], [Solde], [Devise], [DateCreation], [Statut]
             FROM Accounts
-            WHERE id_user = @UserId;
+            WHERE [IdUser] = @UserId;
         ";
 
     await using var connection =

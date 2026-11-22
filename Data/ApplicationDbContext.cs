@@ -33,7 +33,19 @@ public class ApplicationDbContext
     builder.Entity<Transaction>().HasKey(t => t.IdTransaction);
     builder.Entity<Transaction>().Property(t => t.Montant).HasPrecision(18, 2);
     builder.Entity<Transaction>().Property(t => t.TypeTransaction).HasMaxLength(20).IsRequired();
-    builder.Entity<Transaction>().HasOne(t => t.Account).WithMany().HasForeignKey(t => t.IdAccount).OnDelete(DeleteBehavior.Cascade);
+//  - Émetteur
+    builder.Entity<Transaction>()
+    .HasOne(t => t.AccountEmetteur)
+    .WithMany()
+    .HasForeignKey(t => t.IdAccountEmetteur)
+    .OnDelete(DeleteBehavior.Restrict);
+
+//  - Destinataire
+     builder.Entity<Transaction>()
+    .HasOne(t => t.AccountDestinataire)
+    .WithMany()
+    .HasForeignKey(t => t.IdAccountDestinataire)
+    .OnDelete(DeleteBehavior.Restrict);
     builder.Entity<Transaction>().HasOne(t => t.Category).WithMany().HasForeignKey(t => t.IdCategorie).OnDelete(DeleteBehavior.Restrict);
 
     builder.Entity<Budget>().HasKey(b => b.IdBudget);
