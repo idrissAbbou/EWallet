@@ -54,6 +54,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddSingleton<SqlConnectionFactory>();
 builder.Services.AddScoped<CategoryRepository>();
 builder.Services.AddScoped<AccountRepository>();
+builder.Services.AddScoped<FraudDetectionService>();
 
 var app = builder.Build();
 
@@ -83,5 +84,7 @@ app.MapControllerRoute(
     .WithStaticAssets();
 
 app.MapRazorPages();
+
+
 
 app.Run();
