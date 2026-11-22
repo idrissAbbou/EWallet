@@ -18,6 +18,7 @@ public class ApplicationDbContext
   public DbSet<Category> Categories => Set<Category>();
   public DbSet<Transaction> Transactions => Set<Transaction>();
   public DbSet<Budget> Budgets => Set<Budget>();
+  public DbSet<FraudDetection> FraudDetections => Set<FraudDetection>();
   
   protected override void OnModelCreating(ModelBuilder builder)
   {
@@ -39,7 +40,9 @@ public class ApplicationDbContext
     builder.Entity<Budget>().Property(b => b.MontantLimite).HasPrecision(18, 2);
     builder.Entity<Budget>().HasOne(b => b.User).WithMany().HasForeignKey(b => b.IdUser).OnDelete(DeleteBehavior.Cascade);
     builder.Entity<Budget>().HasOne(b => b.Category).WithMany().HasForeignKey(b => b.IdCategorie).OnDelete(DeleteBehavior.Restrict);
-
+    builder.Entity<FraudDetection>().HasKey(f => f.IdFraude);
+    builder.Entity<FraudDetection>().Property(f => f.ScoreRisque).HasPrecision(5, 2);
+    builder.Entity<FraudDetection>().HasOne(f => f.Transaction).WithMany().HasForeignKey(f => f.IdTransaction).OnDelete(DeleteBehavior.Cascade);
     builder.Entity<ApplicationUser>(entity =>
     {
       entity.Property(u => u.Nom)
