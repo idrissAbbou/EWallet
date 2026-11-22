@@ -210,6 +210,37 @@ namespace EWallet.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("EWallet.Models.FraudDetection", b =>
+                {
+                    b.Property<int>("IdFraude")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdFraude"));
+
+                    b.Property<DateTime>("DateDetection")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DecisionIA")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("IdTransaction")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Raison")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("ScoreRisque")
+                        .HasPrecision(5, 2)
+                        .HasColumnType("decimal(5,2)");
+
+                    b.HasKey("IdFraude");
+
+                    b.HasIndex("IdTransaction");
+
+                    b.ToTable("FraudDetections");
+                });
+
             modelBuilder.Entity("EWallet.Models.Transaction", b =>
                 {
                     b.Property<int>("IdTransaction")
@@ -398,6 +429,17 @@ namespace EWallet.Migrations
                     b.Navigation("Category");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("EWallet.Models.FraudDetection", b =>
+                {
+                    b.HasOne("EWallet.Models.Transaction", "Transaction")
+                        .WithMany()
+                        .HasForeignKey("IdTransaction")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Transaction");
                 });
 
             modelBuilder.Entity("EWallet.Models.Transaction", b =>
