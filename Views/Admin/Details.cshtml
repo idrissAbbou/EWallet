@@ -1,0 +1,156 @@
+
+@model EWallet.ViewModels.AccountDetailsViewModel
+
+@{
+    ViewData["Title"] = "Account Details";
+    Layout = "_AdminLayout";
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="bg-red-100 border border-red-400 text-red-800
+                px-4 py-3 rounded-lg mb-4">
+        @TempData["Error"]
+    </div>
+}
+
+<div class="max-w-3xl mx-auto mt-8">
+
+    <h1 class="text-2xl font-bold text-gray-800 mb-6">
+        Account Details
+    </h1>
+
+    <div class="bg-white rounded-xl shadow p-6 space-y-4">
+
+        <div>
+            <p class="text-sm text-gray-500">Account Number</p>
+            <p class="font-semibold">@Model.NumeroCompte</p>
+        </div>
+
+        <div>
+            <p class="text-sm text-gray-500">Account ID</p>
+            <p class="font-semibold">@Model.IdAccount</p>
+        </div>
+
+        <div>
+            <p class="text-sm text-gray-500">User ID</p>
+            <p class="font-semibold">@Model.IdUser</p>
+        </div>
+
+        <div class="border-t border-gray-200 pt-4 mt-4">
+            <h2 class="text-lg font-bold text-gray-800">
+              Account Owner
+            </h2>
+        </div>
+
+        <div>
+            <p class="text-sm text-gray-500">First Name</p>
+            <p class="font-semibold">@Model.Prenom</p>
+        </div>
+
+        <div>
+            <p class="text-sm text-gray-500">Last Name</p>
+            <p class="font-semibold">@Model.Nom</p>
+        </div>
+
+        <div>
+            <p class="text-sm text-gray-500">Email</p>
+            <p class="font-semibold">@Model.Email</p>
+        </div>
+
+        <div>
+            <p class="text-sm text-gray-500">Account Type</p>
+            <p class="font-semibold">@Model.TypeAccount</p>
+        </div>
+
+        <div>
+            <p class="text-sm text-gray-500">Balance</p>
+            <p class="font-semibold">@Model.Solde @Model.Devise</p>
+        </div>
+
+        <div>
+            <p class="text-sm text-gray-500">Status</p>
+            <p class="font-semibold">@Model.Statut</p>
+        </div>
+
+     @if (Model.Statut == "Active" || Model.Statut == "Blocked")
+     {
+       <form asp-controller="Admin"
+          asp-action="ChangeStatus"
+          method="post">
+
+        @Html.AntiForgeryToken()
+
+        <input type="hidden"
+               name="id"
+               value="@Model.IdAccount" />
+
+        <input type="hidden"
+               name="newStatus"
+               value="@(Model.Statut == "Active" ? "Blocked" : "Active")" />
+
+        @if (Model.Statut == "Active")
+        {
+            <button type="submit"
+                    class="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-lg"
+                    onclick="return confirm('Are you sure you want to block this account?')">
+                Block Account
+            </button>
+        }
+        else
+        {
+            <button type="submit"
+                    class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg"
+                    onclick="return confirm('Are you sure you want to unblock this account?')">
+                Unblock Account
+            </button>
+        }
+    </form>
+   }
+        <div>
+            <p class="text-sm text-gray-500">Creation Date</p>
+            <p class="font-semibold">
+                @Model.DateCreation.ToString("dd/MM/yyyy")
+            </p>
+        </div>
+
+        <div class="border-t border-gray-200 pt-4 mt-4">
+
+           <h2 class="text-lg font-semibold text-gray-800 mb-3">
+             Danger Zone
+           </h2>
+
+           <p class="text-sm text-gray-500 mb-4">
+              This action will close and hide the account
+               without permanently deleting its data.
+           </p>
+
+          <form asp-controller="Admin"
+          asp-action="SoftDelete"
+          method="post">
+
+        @Html.AntiForgeryToken()
+
+        <input type="hidden"
+               name="id"
+               value="@Model.IdAccount" />
+
+        <button type="submit"
+                onclick="return confirm('Are you sure you want to delete this account?')"
+                class="bg-red-800 hover:bg-red-900 text-white px-5 py-2 rounded-lg">
+            Delete Account
+        </button>
+
+    </form>
+
+   </div>
+
+    </div>
+
+    <a asp-controller="Admin"
+       asp-action="Accounts"
+       class="inline-block mt-6 text-blue-600 hover:underline">
+        ← Back to Accounts
+    </a>
+
+</div>
