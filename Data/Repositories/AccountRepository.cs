@@ -1,5 +1,6 @@
 using EWallet.Models;
 using Microsoft.Data.SqlClient;
+using EWallet.ViewModels;
 
 namespace EWallet.Data.Repositories;
 
@@ -49,7 +50,8 @@ public class AccountRepository
                 date_creation,
                 statut
             FROM Accounts
-            WHERE id_user = @UserId;
+            WHERE id_user = @UserId
+            AND is_deleted = 0;
         ";
 
     await using var connection =
@@ -81,8 +83,13 @@ public class AccountRepository
   public async Task<List<Account>> GetAllAsync()
   {
     var accounts = new List<Account>();
-
-    const string query = "SELECT * FROM Accounts ORDER BY id_account DESC";
++     const string query = @" 
+         SELECT id_account, id_user, numero_compte,
+           type_account, solde, devise,
+           date_creation, statut
+        FROM dbo.Accounts
+        WHERE is_deleted = 0
+        ORDER BY id_account DESC";
 
     await using var connection = _connectionFactory.CreateConnection();
     await connection.OpenAsync();
@@ -108,4 +115,122 @@ public class AccountRepository
     return accounts;
   }
 
+  public async Task<Account?> GetByIdAsync(int accountId)
+  {
+    const string query = @"
+        SELECT id_account, id_user, numero_compte,
+               type_account, solde, devise,
+               date_creation, statut
+        FROM Accounts
+        WHERE id_account = @AccountId
+        AND is_deleted = 0";
+
+    await using var connection = _connectionFactory.CreateConnection();
+    await connection.OpenAsync();
+
+    await using var command = new SqlCommand(query, connection);
+    command.Parameters.AddWithValue("@AccountId", accountId);
+
+    await using var reader = await command.ExecuteReaderAsync();
+
+    if (!await reader.ReadAsync())
+        return null;
+
+    return new Account
+    {
+        IdAccount = reader.GetInt32(0),
+        IdUser = reader.GetInt32(1),
+        NumeroCompte = reader.GetString(2),
+        TypeAccount = reader.GetString(3),
+        Solde = reader.GetDecimal(4),
+        Devise = reader.GetString(5),
+        DateCreation = reader.GetDateTime(6),
+        Statut = reader.GetString(7)
+    };
+ }
+
+  public async Task<AccountDetailsViewModel?> GetAccountDetailsAsync(int accountId)
+  {
+    const string query = @"
+        SELECT a.id_account, a.id_user, a.numero_compte,
+               a.type_account, a.solde, a.devise,
+               a.date_creation, a.statut,
+               u.Nom, u.Prenom, u.Email
+        FROM dbo.Accounts a
+        INNER JOIN dbo.AspNetUsers u ON a.id_user = u.Id
+        WHERE a.id_account = @AccountId
+           AND a.is_deleted = 0";
+
+    await using var connection = _connectionFactory.CreateConnection();
+    await connection.OpenAsync();
+
+    await using var command = new SqlCommand(query, connection);
+    command.Parameters.AddWithValue("@AccountId", accountId);
+
+    await using var reader = await command.ExecuteReaderAsync();
+
+    if (!await reader.ReadAsync())
+        return null;
+
+    return new AccountDetailsViewModel
+    {
+        IdAccount = reader.GetInt32(0),
+        IdUser = reader.GetInt32(1),
+        NumeroCompte = reader.GetString(2),
+        TypeAccount = reader.GetString(3),
+        Solde = reader.GetDecimal(4),
+        Devise = reader.GetString(5),
+        DateCreation = reader.GetDateTime(6),
+        Statut = reader.GetString(7),
+        Nom = reader.GetString(8),
+        Prenom = reader.GetString(9),
+        Email = reader.IsDBNull(10) ? "" : reader.GetString(10)
+    };
+++  } 
+  public async Task<bool> UpdateStatusAsync(int accountId, string newStatus)
+  {
+    if (newStatus != "Active" && newStatus != "Blocked")
+        return false;
+
+    const string query = @"
+        UPDATE dbo.Accounts
+        SET statut = @NewStatus
+        WHERE id_account = @AccountId
+          AND statut IN ('Active', 'Blocked')
+          AND is_deleted = 0";
+
+    await using var connection = _connectionFactory.CreateConnection();
+    await connection.OpenAsync();
+
+    await using var command = new SqlCommand(query, connection);
+
+    command.Parameters.AddWithValue("@NewStatus", newStatus);
+    command.Parameters.AddWithValue("@AccountId", accountId);
+
+    int affectedRows = await command.ExecuteNonQueryAsync();
+
+    return affectedRows > 0;
+}
+
+  public async Task<bool> SoftDeleteAsync(int accountId)
+  {
+    const string query = @"
+        UPDATE dbo.Accounts
+        SET is_deleted = 1,
+            statut = 'Closed'
+        WHERE id_account = @AccountId
+          AND is_deleted = 0
+          AND solde = 0
+          AND statut IN ('Active', 'Blocked')";
+
+    await using var connection = _connectionFactory.CreateConnection();
+    await connection.OpenAsync();
+
+    await using var command = new SqlCommand(query, connection);
+    command.Parameters.AddWithValue("@AccountId", accountId);
+
+    int affectedRows = await command.ExecuteNonQueryAsync();
+
+    return affectedRows > 0;
+}
 }

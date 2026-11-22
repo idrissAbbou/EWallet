@@ -29,4 +29,54 @@ public class AdminController : Controller
         return View(accounts);
 
     }
+
+    public async Task<IActionResult> Details(int id)
+    {
+      var account = await _accountRepository.GetAccountDetailsAsync(id);
+
+      if (account == null)
+    {
+        return NotFound();
+    }
+
+       return View(account);
+    }
+
+[HttpPost]
+[ValidateAntiForgeryToken]
+    public async Task<IActionResult> ChangeStatus(int id, string newStatus)
+  {
+    if (newStatus != "Active" && newStatus != "Blocked")
+    {
+        return BadRequest();
+    }
+
+    bool updated = await _accountRepository.UpdateStatusAsync(id, newStatus);
+
+    if (!updated)
+    {
+        return NotFound();
+    }
+
+    return RedirectToAction(nameof(Details), new { id });
+}
+
+[HttpPost]
+[ValidateAntiForgeryToken]
+    public async Task<IActionResult> SoftDelete(int id)
+    {
+    bool deleted = await _accountRepository.SoftDeleteAsync(id);
+
+    if (!deleted)
+    {
+        TempData["Error"] =
+            "Account cannot be deleted. Check that the balance is zero and the account is not already closed or deleted.";
+
+        return RedirectToAction(nameof(Details), new { id });
+    }
+
+    TempData["Success"] = "Account deleted successfully.";
+
+    return RedirectToAction(nameof(Accounts));
+}
 }
