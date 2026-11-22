@@ -83,7 +83,7 @@ public class AccountRepository
   public async Task<List<Account>> GetAllAsync()
   {
     var accounts = new List<Account>();
-+     const string query = @" 
+    const string query = @" 
          SELECT id_account, id_user, numero_compte,
            type_account, solde, devise,
            date_creation, statut
@@ -186,7 +186,7 @@ public class AccountRepository
         Prenom = reader.GetString(9),
         Email = reader.IsDBNull(10) ? "" : reader.GetString(10)
     };
-++  } 
+ } 
   public async Task<bool> UpdateStatusAsync(int accountId, string newStatus)
   {
     if (newStatus != "Active" && newStatus != "Blocked")
