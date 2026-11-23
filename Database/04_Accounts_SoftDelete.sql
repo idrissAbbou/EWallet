@@ -1,3 +1,6 @@
+USE EWallet;
+GO
+
 -- EWallet - Accounts Soft Delete
 -- Add is_deleted only if the column does not exist
 
