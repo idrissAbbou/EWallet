@@ -38,6 +38,17 @@
                             </a>
                         </li>
                 }
+                @if (User.IsInRole("Client"))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-dark"
+                            asp-area=""
+                            asp-controller="Wallet"
+                            asp-action="Index">
+                             My Wallet
+                        </a>
+                    </li>
+                }
                  </ul>
                 </div>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end">
