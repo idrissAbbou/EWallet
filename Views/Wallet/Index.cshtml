@@ -6,77 +6,9 @@
     ViewData["FullWidth"] = true;
 }
 
-<style>
-    .wallet-dashboard {
-        background: #F8FAFD;
-        min-height: calc(100vh - 160px);
-        padding: 48px 24px;
-    }
-
-    .wallet-dashboard .dashboard-container {
-        max-width: 1280px;
-        margin: 0 auto;
-    }
-
-    .wallet-dashboard .dashboard-label {
-        color: #2563A6;
-        font-size: 12px;
-        font-weight: 700;
-        letter-spacing: 2px;
-    }
-
-    .wallet-dashboard .dashboard-title {
-        color: #142D50;
-        font-weight: 700;
-    }
-
-    .wallet-dashboard .wallet-card {
-        background: linear-gradient(135deg, #142D50, #2563A6);
-        border-radius: 20px;
-        box-shadow: 0 16px 35px rgba(20, 45, 80, 0.15);
-    }
-
-    .wallet-dashboard .info-card {
-        background: #FFFFFF;
-        border: 1px solid #EDF1F6;
-        border-radius: 20px;
-        box-shadow: 0 5px 20px rgba(20, 45, 80, 0.05);
-    }
-
-    .wallet-dashboard .section-title {
-        color: #142D50;
-        font-weight: 700;
-    }
-
-    .wallet-dashboard .profile-value {
-        font-weight: 600;
-        color: #142D50;
-        overflow-wrap: anywhere;
-    }
-
-    .wallet-dashboard .edit-profile-btn {
-        color: #2563A6;
-        border: 1px solid #2563A6;
-        border-radius: 30px;
-        padding: 7px 18px;
-        text-decoration: none;
-        transition: all 0.2s ease;
-    }
-
-    .wallet-dashboard .edit-profile-btn:hover {
-        color: #FFFFFF;
-        background: #2563A6;
-    }
-
-    @@media (max-width: 767.98px) {
-        .wallet-dashboard {
-            padding: 28px 16px;
-        }
-    }
-</style>
+<link rel="stylesheet" href="~/css/wallet.css" asp-append-version="true" />
 
 <div class="wallet-dashboard">
-
     <div class="dashboard-container">
 
         <!-- HEADER -->
@@ -118,11 +50,9 @@
                                 Available Balance
                             </p>
 
-                            <h1 class="display-5 fw-bold mb-3"
-                                style="color: #FFFFFF;">
+                            <h1 class="display-5 fw-bold mb-3 wallet-balance">
                                 @Model.Solde.ToString("N2")
-                                <span class="fs-4"
-                                      style="color: #FFFFFF;">
+                                <span class="fs-4 wallet-balance">
                                     @Model.Devise
                                 </span>
                             </h1>

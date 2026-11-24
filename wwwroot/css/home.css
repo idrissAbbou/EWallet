@@ -1,0 +1,39 @@
+
+/* EWallet Home Page */
+
+.home-welcome {
+    color: #2563A6;
+    letter-spacing: 2px;
+}
+
+.home-title,
+.home-feature-title {
+    color: #142D50;
+}
+
+.home-primary-btn {
+    background-color: #2563A6;
+    border-radius: 12px;
+    color: #FFFFFF;
+}
+
+.home-primary-btn:hover {
+    background-color: #1D5088;
+    color: #FFFFFF;
+}
+
+.home-outline-btn {
+    border-radius: 12px;
+}
+
+.home-feature-card {
+    border-radius: 18px;
+}
+
+.home-feature-icon {
+    width: 48px;
+    height: 48px;
+    background-color: #EAF2FB;
+    border-radius: 14px;
+    flex-shrink: 0;
+}

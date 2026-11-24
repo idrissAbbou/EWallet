@@ -612,3 +612,14 @@ main form:not([id]):has(#Input_Email) button[type="submit"]:hover {
         padding: 22px;
     }
 }
+/* EWallet Main Navbar Brand */
+
+.ewallet-navbar-brand {
+    color: #142D50;
+    font-size: 24px;
+    letter-spacing: -0.5px;
+}
+
+.ewallet-navbar-brand:hover {
+    color: #2563A6;
+}
