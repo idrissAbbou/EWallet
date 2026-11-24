@@ -6,150 +6,270 @@
     Layout = "_AdminLayout";
 }
 
-@if (TempData["Error"] != null)
-{
-    <div class="bg-red-100 border border-red-400 text-red-800
-                px-4 py-3 rounded-lg mb-4">
-        @TempData["Error"]
+<div class="p-4 md:p-6 max-w-6xl mx-auto">
+
+    <!-- HEADER -->
+    <div class="mb-8">
+        <p class="text-xs font-bold uppercase tracking-widest mb-2"
+           style="color:#2563A6;">
+            EWALLET ADMIN
+        </p>
+
+        <h1 class="text-3xl font-bold" style="color:#142D50;">
+            Account Details
+        </h1>
+
+        <p class="text-gray-500 mt-2">
+            View account information and manage its status.
+        </p>
     </div>
-}
 
-<div class="max-w-3xl mx-auto mt-8">
-
-    <h1 class="text-2xl font-bold text-gray-800 mb-6">
-        Account Details
-    </h1>
-
-    <div class="bg-white rounded-xl shadow p-6 space-y-4">
-
-        <div>
-            <p class="text-sm text-gray-500">Account Number</p>
-            <p class="font-semibold">@Model.NumeroCompte</p>
+    @if (TempData["Error"] != null)
+    {
+        <div class="bg-red-50 border border-red-200 text-red-700
+                    px-5 py-4 rounded-xl mb-6">
+            @TempData["Error"]
         </div>
+    }
 
-        <div>
-            <p class="text-sm text-gray-500">Account ID</p>
-            <p class="font-semibold">@Model.IdAccount</p>
+    <!-- BALANCE CARD -->
+    <div class="rounded-2xl p-6 mb-6 text-white"
+         style="background:linear-gradient(135deg,#142D50,#2563A6);
+                box-shadow:0 16px 35px rgba(20,45,80,.15);">
+
+        <p class="text-sm mb-3 text-blue-100">
+            Available Balance
+        </p>
+
+        <h2 class="text-4xl font-bold mb-5 text-white">
+            @Model.Solde.ToString("N2")
+            <span class="text-xl">@Model.Devise</span>
+        </h2>
+
+        <div class="border-t border-white/20 pt-4
+                    flex flex-wrap justify-between items-center gap-4">
+
+            <div>
+                <p class="text-sm text-blue-100 mb-1">
+                    Account Number
+                </p>
+                <p class="font-semibold break-all">
+                    @Model.NumeroCompte
+                </p>
+            </div>
+
+            <div>
+                <p class="text-sm text-blue-100 mb-2">
+                    Status
+                </p>
+
+                @if (Model.Statut == "Active")
+                {
+                    <span class="inline-block bg-green-500 text-white
+                                 text-xs font-bold px-4 py-2 rounded-full">
+                        Active
+                    </span>
+                }
+                else if (Model.Statut == "Blocked")
+                {
+                    <span class="inline-block bg-red-500 text-white
+                                 text-xs font-bold px-4 py-2 rounded-full">
+                        Blocked
+                    </span>
+                }
+                else
+                {
+                    <span class="inline-block bg-gray-500 text-white
+                                 text-xs font-bold px-4 py-2 rounded-full">
+                        @Model.Statut
+                    </span>
+                }
+            </div>
         </div>
+    </div>
 
-        <div>
-            <p class="text-sm text-gray-500">User ID</p>
-            <p class="font-semibold">@Model.IdUser</p>
-        </div>
+    <!-- INFORMATION -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
 
-        <div class="border-t border-gray-200 pt-4 mt-4">
-            <h2 class="text-lg font-bold text-gray-800">
-              Account Owner
+        <!-- ACCOUNT INFORMATION -->
+        <div class="bg-white rounded-2xl p-6"
+             style="border:1px solid #EDF1F6;
+                    box-shadow:0 5px 20px rgba(20,45,80,.06);">
+
+            <h2 class="text-xl font-bold mb-6" style="color:#142D50;">
+                Account Information
             </h2>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+
+                <div>
+                    <p class="text-sm text-gray-500 mb-1">Account ID</p>
+                    <p class="font-semibold">@Model.IdAccount</p>
+                </div>
+
+                <div>
+                    <p class="text-sm text-gray-500 mb-1">User ID</p>
+                    <p class="font-semibold">@Model.IdUser</p>
+                </div>
+
+                <div>
+                    <p class="text-sm text-gray-500 mb-1">Account Type</p>
+                    <p class="font-semibold">@Model.TypeAccount</p>
+                </div>
+
+                <div>
+                    <p class="text-sm text-gray-500 mb-1">Currency</p>
+                    <p class="font-semibold">@Model.Devise</p>
+                </div>
+
+                <div>
+                    <p class="text-sm text-gray-500 mb-1">Creation Date</p>
+                    <p class="font-semibold">
+                        @Model.DateCreation.ToString("dd/MM/yyyy")
+                    </p>
+                </div>
+
+            </div>
         </div>
 
-        <div>
-            <p class="text-sm text-gray-500">First Name</p>
-            <p class="font-semibold">@Model.Prenom</p>
+        <!-- ACCOUNT OWNER -->
+        <div class="bg-white rounded-2xl p-6"
+             style="border:1px solid #EDF1F6;
+                    box-shadow:0 5px 20px rgba(20,45,80,.06);">
+
+            <h2 class="text-xl font-bold mb-6" style="color:#142D50;">
+                Account Owner
+            </h2>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+
+                <div>
+                    <p class="text-sm text-gray-500 mb-1">First Name</p>
+                    <p class="font-semibold">@Model.Prenom</p>
+                </div>
+
+                <div>
+                    <p class="text-sm text-gray-500 mb-1">Last Name</p>
+                    <p class="font-semibold">@Model.Nom</p>
+                </div>
+
+                <div class="sm:col-span-2">
+                    <p class="text-sm text-gray-500 mb-1">Email</p>
+                    <p class="font-semibold break-all">@Model.Email</p>
+                </div>
+       <!-- PHONE NUMBER -->
+                <div class="sm:col-span-2">
+                    <p class="text-sm text-gray-500 mb-1">
+                       Phone Number
+                    </p>
+
+                    <p class="font-semibold">
+                        @(string.IsNullOrWhiteSpace(Model.PhoneNumber)
+                         ? "Not provided"
+                         : Model.PhoneNumber)
+                    </p>
+              </div>
+            </div>
         </div>
+    </div>
+    <!-- STATUS MANAGEMENT -->
+    <div class="bg-white rounded-2xl p-6 mb-6"
+         style="border:1px solid #EDF1F6;
+                box-shadow:0 5px 20px rgba(20,45,80,.06);">
 
-        <div>
-            <p class="text-sm text-gray-500">Last Name</p>
-            <p class="font-semibold">@Model.Nom</p>
-        </div>
+        <h2 class="text-xl font-bold mb-2" style="color:#142D50;">
+            Account Status Management
+        </h2>
 
-        <div>
-            <p class="text-sm text-gray-500">Email</p>
-            <p class="font-semibold">@Model.Email</p>
-        </div>
+        <p class="text-sm text-gray-500 mb-5">
+            Manage the current status of this wallet account.
+        </p>
 
-        <div>
-            <p class="text-sm text-gray-500">Account Type</p>
-            <p class="font-semibold">@Model.TypeAccount</p>
-        </div>
-
-        <div>
-            <p class="text-sm text-gray-500">Balance</p>
-            <p class="font-semibold">@Model.Solde @Model.Devise</p>
-        </div>
-
-        <div>
-            <p class="text-sm text-gray-500">Status</p>
-            <p class="font-semibold">@Model.Statut</p>
-        </div>
-
-     @if (Model.Statut == "Active" || Model.Statut == "Blocked")
-     {
-       <form asp-controller="Admin"
-          asp-action="ChangeStatus"
-          method="post">
-
-        @Html.AntiForgeryToken()
-
-        <input type="hidden"
-               name="id"
-               value="@Model.IdAccount" />
-
-        <input type="hidden"
-               name="newStatus"
-               value="@(Model.Statut == "Active" ? "Blocked" : "Active")" />
-
-        @if (Model.Statut == "Active")
+        @if (Model.Statut == "Active" || Model.Statut == "Blocked")
         {
-            <button type="submit"
-                    class="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-lg"
-                    onclick="return confirm('Are you sure you want to block this account?')">
-                Block Account
-            </button>
+            <form asp-controller="Admin"
+                  asp-action="ChangeStatus"
+                  method="post">
+
+                @Html.AntiForgeryToken()
+
+                <input type="hidden"
+                       name="id"
+                       value="@Model.IdAccount" />
+
+                <input type="hidden"
+                       name="newStatus"
+                       value="@(Model.Statut == "Active" ? "Blocked" : "Active")" />
+
+                @if (Model.Statut == "Active")
+                {
+                    <button type="submit"
+                            class="bg-red-600 hover:bg-red-700 text-white
+                                   font-semibold px-6 py-3 rounded-xl"
+                            onclick="return confirm('Are you sure you want to block this account?')">
+                        Block Account
+                    </button>
+                }
+                else
+                {
+                    <button type="submit"
+                            class="bg-green-600 hover:bg-green-700 text-white
+                                   font-semibold px-6 py-3 rounded-xl"
+                            onclick="return confirm('Are you sure you want to unblock this account?')">
+                        Unblock Account
+                    </button>
+                }
+
+            </form>
         }
         else
         {
-            <button type="submit"
-                    class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg"
-                    onclick="return confirm('Are you sure you want to unblock this account?')">
-                Unblock Account
-            </button>
-        }
-    </form>
-   }
-        <div>
-            <p class="text-sm text-gray-500">Creation Date</p>
-            <p class="font-semibold">
-                @Model.DateCreation.ToString("dd/MM/yyyy")
+            <p class="text-sm text-gray-500">
+                Status changes are not available for this account.
             </p>
-        </div>
-
-        <div class="border-t border-gray-200 pt-4 mt-4">
-
-           <h2 class="text-lg font-semibold text-gray-800 mb-3">
-             Danger Zone
-           </h2>
-
-           <p class="text-sm text-gray-500 mb-4">
-              This action will close and hide the account
-               without permanently deleting its data.
-           </p>
-
-          <form asp-controller="Admin"
-          asp-action="SoftDelete"
-          method="post">
-
-        @Html.AntiForgeryToken()
-
-        <input type="hidden"
-               name="id"
-               value="@Model.IdAccount" />
-
-        <button type="submit"
-                onclick="return confirm('Are you sure you want to delete this account?')"
-                class="bg-red-800 hover:bg-red-900 text-white px-5 py-2 rounded-lg">
-            Delete Account
-        </button>
-
-    </form>
-
-   </div>
-
+        }
     </div>
 
+    <!-- DANGER ZONE -->
+    <div class="bg-white rounded-2xl p-6 mb-6"
+         style="border:1px solid #FECACA;
+                box-shadow:0 5px 20px rgba(20,45,80,.04);">
+
+        <h2 class="text-xl font-bold text-red-700 mb-2">
+            Danger Zone
+        </h2>
+
+        <p class="text-sm text-gray-500 mb-5">
+            This action will close and hide the account
+            without permanently deleting its data.
+            The account must have a zero balance and an eligible status.
+        </p>
+
+        <form asp-controller="Admin"
+              asp-action="SoftDelete"
+              method="post">
+
+            @Html.AntiForgeryToken()
+
+            <input type="hidden"
+                   name="id"
+                   value="@Model.IdAccount" />
+
+            <button type="submit"
+                    class="bg-red-800 hover:bg-red-900 text-white
+                           font-semibold px-6 py-3 rounded-xl"
+                    onclick="return confirm('Are you sure you want to delete this account?')">
+                Delete Account
+            </button>
+
+        </form>
+    </div>
+
+    <!-- BACK -->
     <a asp-controller="Admin"
        asp-action="Accounts"
-       class="inline-block mt-6 text-blue-600 hover:underline">
+       class="inline-block px-5 py-3 rounded-xl font-semibold"
+       style="background:#EAF2FB;color:#2563A6;">
         ← Back to Accounts
     </a>
 

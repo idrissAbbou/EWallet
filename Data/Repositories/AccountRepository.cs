@@ -215,7 +215,8 @@ public class AccountRepository
                 a.statut,
                 u.Nom,
                 u.Prenom,
-                u.Email
+                u.Email,
+                u.PhoneNumber
             FROM dbo.Accounts a
             INNER JOIN dbo.AspNetUsers u
                 ON a.id_user = u.Id
@@ -251,7 +252,10 @@ public class AccountRepository
             Prenom = reader.GetString(9),
             Email = reader.IsDBNull(10)
                 ? ""
-                : reader.GetString(10)
+                : reader.GetString(10),
+            PhoneNumber = reader.IsDBNull(11)
+                ? null
+                : reader.GetString(11)
         };
     }
 
