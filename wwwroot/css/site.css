@@ -1,4 +1,3 @@
-
 /* =========================================
    1. GLOBAL
 ========================================= */
@@ -389,5 +388,227 @@ body:has(#enable-authenticator) .col-lg-9 h4 {
     #enable-authenticator,
     #reset-authenticator {
         margin-bottom: 8px;
+    }
+}
+
+/* =========================================
+   15. AUTHENTICATION - REGISTER & LOGIN
+   Shared visual style, CSS only
+========================================= */
+
+body:has(#registerForm),
+body:has(form#account) {
+    background-color: #F8FAFD;
+}
+
+body:has(#registerForm) .navbar,
+body:has(form#account) .navbar {
+    background-color: #FFFFFF !important;
+}
+
+/* Page titles */
+body:has(#registerForm) main h1,
+body:has(form#account) main h1 {
+    color: #142D50;
+    font-size: 34px;
+    font-weight: 700;
+    text-align: center;
+    margin: 16px 0 24px;
+}
+
+/* Center the Bootstrap row that contains the form */
+body .row:has(#registerForm),
+body .row:has(form#account) {
+    justify-content: center;
+}
+
+/* Hide only the other column in the same authentication row.
+   External authentication is not configured in this project. */
+body .row:has(#registerForm) > [class*="col-"]:not(:has(#registerForm)),
+body .row:has(form#account) > [class*="col-"]:not(:has(form#account)) {
+    display: none;
+}
+
+/* Bootstrap columns have widths (col-md-4 / col-md-6).
+   Override just the column holding our form. */
+body .row:has(#registerForm) > [class*="col-"]:has(#registerForm),
+body .row:has(form#account) > [class*="col-"]:has(form#account) {
+    flex: 0 1 520px;
+    width: 100%;
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* The actual forms */
+#registerForm,
+form#account {
+    width: 100%;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #FFFFFF;
+    border: 1px solid #EDF1F6;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(20, 45, 80, .08);
+}
+
+#registerForm h2,
+form#account h2 {
+    color: #142D50;
+    font-size: 23px;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+#registerForm .form-control,
+form#account .form-control {
+    border: 1px solid #DCE4EE;
+    border-radius: 12px;
+}
+
+#registerForm .form-control:focus,
+form#account .form-control:focus {
+    border-color: #2563A6;
+    box-shadow: 0 0 0 3px rgba(37, 99, 166, .12);
+}
+
+#registerSubmit,
+#login-submit {
+    background-color: #2563A6;
+    border-color: #2563A6;
+    color: #FFFFFF;
+    border-radius: 12px;
+    font-weight: 600;
+    padding: 12px;
+}
+
+#registerSubmit:hover,
+#login-submit:hover {
+    background-color: #142D50;
+    border-color: #142D50;
+    color: #FFFFFF;
+}
+
+/* Login-only controls */
+form#account .form-check-input:checked {
+    background-color: #2563A6;
+    border-color: #2563A6;
+}
+
+form#account a {
+    color: #2563A6;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+form#account a:hover {
+    color: #142D50;
+    text-decoration: underline;
+}
+
+form#account p {
+    margin: 12px 0 8px;
+}
+
+form#account > div:has(#forgot-password) {
+    margin-top: 18px;
+}
+
+@media (max-width: 767px) {
+    body:has(#registerForm) main h1,
+    body:has(form#account) main h1 {
+        font-size: 28px;
+    }
+
+    #registerForm,
+    form#account {
+        padding: 22px;
+    }
+}
+/* =========================================
+   EWALLET - PASSWORD RECOVERY & EMAIL CONFIRMATION
+========================================= */
+
+/* Background */
+body:has(main form:not([id]) #Input_Email) {
+    background-color: #F8FAFD;
+}
+
+/* Center the page content */
+body:has(main form:not([id]) #Input_Email)
+main .row:has(form:not([id]) #Input_Email) {
+    justify-content: center;
+}
+
+/* Center the form column */
+body:has(main form:not([id]) #Input_Email)
+main .row > div:has(form:not([id]) #Input_Email) {
+    width: 100%;
+    max-width: 520px;
+    flex: 0 1 520px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Page headings */
+body:has(main form:not([id]) #Input_Email) main h1 {
+    color: #142D50;
+    font-size: 34px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+body:has(main form:not([id]) #Input_Email) main h2 {
+    color: #2563A6;
+    font-size: 20px;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Form card */
+main form:not([id]):has(#Input_Email) {
+    background: #FFFFFF;
+    border: 1px solid #EDF1F6;
+    border-radius: 20px;
+    padding: 30px;
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto;
+    box-shadow: 0 10px 30px rgba(20, 45, 80, 0.08);
+}
+
+/* Email field */
+main form:not([id]):has(#Input_Email) .form-control {
+    border-radius: 12px;
+    border-color: #DCE4EE;
+}
+
+/* Focus */
+main form:not([id]):has(#Input_Email) .form-control:focus {
+    border-color: #2563A6;
+    box-shadow: 0 0 0 3px rgba(37, 99, 166, 0.12);
+}
+
+/* Submit button */
+main form:not([id]):has(#Input_Email) button[type="submit"] {
+    background-color: #2563A6;
+    border-color: #2563A6;
+    color: #FFFFFF;
+    border-radius: 12px;
+    font-weight: 600;
+    padding: 12px;
+}
+
+main form:not([id]):has(#Input_Email) button[type="submit"]:hover {
+    background-color: #142D50;
+    border-color: #142D50;
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+    main form:not([id]):has(#Input_Email) {
+        padding: 22px;
     }
 }
