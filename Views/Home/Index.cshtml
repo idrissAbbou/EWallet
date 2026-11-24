@@ -1,8 +1,200 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿
+@{
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container py-5">
+
+    <div class="text-center">
+
+        <p class="text-uppercase fw-semibold"
+           style="color: #2563A6; letter-spacing: 2px;">
+            WELCOME TO EWALLET
+        </p>
+
+        <h1 class="display-4 fw-bold"
+            style="color: #142D50;">
+            Your Money, Your Control.
+        </h1>
+
+        <p class="lead text-muted mt-3">
+            Manage your digital wallet securely and easily.
+        </p>
+
+<div class="d-flex justify-content-center gap-3 mt-4 flex-wrap">
+
+    @if (User.IsInRole("Client"))
+    {
+        <a asp-controller="Wallet"
+           asp-action="Index"
+           class="btn btn-lg text-white px-4 py-3"
+           style="background: #2563A6; border-radius: 12px;">
+            Go to My Wallet
+        </a>
+
+        <a asp-area="Identity"
+           asp-page="/Account/Manage/Index"
+           class="btn btn-lg btn-outline-primary px-4 py-3"
+           style="border-radius: 12px;">
+            Account Settings
+        </a>
+    }
+    else if (User.IsInRole("Admin"))
+    {
+        <a asp-controller="Admin"
+           asp-action="Accounts"
+           class="btn btn-lg text-white px-4 py-3"
+           style="background: #2563A6; border-radius: 12px;">
+            Manage Accounts
+        </a>
+    }
+    else
+    {
+        <a asp-area="Identity"
+           asp-page="/Account/Login"
+           class="btn btn-lg text-white px-4 py-3"
+           style="background: #2563A6; border-radius: 12px;">
+            Login
+        </a>
+
+        <a asp-area="Identity"
+           asp-page="/Account/Register"
+           class="btn btn-lg btn-outline-primary px-4 py-3"
+           style="border-radius: 12px;">
+            Create Account
+        </a>
+    }
+
+    </div>
+
+    </div>
+
+<!-- EWallet Features -->
+<div class="row g-4 mt-5">
+
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm h-100 p-3"
+             style="border-radius: 18px;">
+            <div class="card-body">
+
+<div class="d-flex align-items-center gap-3 mb-3">
+
+    <div class="d-flex align-items-center justify-content-center"
+         style="width: 48px; height: 48px;
+                background: #EAF2FB;
+                border-radius: 14px;">
+
+        <svg xmlns="http://www.w3.org/2000/svg"
+             width="24" height="24"
+             fill="none"
+             stroke="#2563A6"
+             stroke-width="2"
+             viewBox="0 0 24 24">
+            <rect x="3" y="5" width="18" height="15" rx="2" />
+            <path d="M3 9h18" />
+            <path d="M16 15h2" />
+        </svg>
+
+    </div>
+
+    <h5 class="fw-bold mb-0" style="color: #142D50;">
+        Digital Wallet
+    </h5>
+
+</div>
+
+                <p class="text-muted mb-0">
+                    Check your wallet balance and account details
+                    in one convenient place.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm h-100 p-3"
+             style="border-radius: 18px;">
+            <div class="card-body">
+
+<div class="d-flex align-items-center gap-3 mb-3">
+
+    <div class="d-flex align-items-center justify-content-center"
+         style="width: 48px; height: 48px;
+                background: #EAF2FB;
+                border-radius: 14px;">
+
+        <svg xmlns="http://www.w3.org/2000/svg"
+             width="24" height="24"
+             fill="none"
+             stroke="#2563A6"
+             stroke-width="2"
+             stroke-linecap="round"
+             stroke-linejoin="round"
+             viewBox="0 0 24 24"
+             aria-hidden="true">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            <path d="m9 12 2 2 4-4" />
+        </svg>
+
+    </div>
+
+    <h5 class="fw-bold mb-0" style="color: #142D50;">
+        Account Security
+    </h5>
+
+</div>
+
+                <p class="text-muted mb-0">
+                    Access your personal account securely
+                    with ASP.NET Core Identity.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm h-100 p-3"
+             style="border-radius: 18px;">
+            <div class="card-body">
+
+<div class="d-flex align-items-center gap-3 mb-3">
+
+    <div class="d-flex align-items-center justify-content-center"
+         style="width: 48px; height: 48px;
+                background: #EAF2FB;
+                border-radius: 14px;
+                flex-shrink: 0;">
+
+        <svg xmlns="http://www.w3.org/2000/svg"
+             width="24" height="24"
+             fill="none"
+             stroke="#2563A6"
+             stroke-width="2"
+             stroke-linecap="round"
+             stroke-linejoin="round"
+             viewBox="0 0 24 24"
+             aria-hidden="true">
+
+            <circle cx="12" cy="8" r="4" />
+            <path d="M4 21v-2a8 8 0 0 1 16 0v2" />
+
+        </svg>
+
+    </div>
+
+    <h5 class="fw-bold mb-0" style="color: #142D50;">
+        Personal Profile
+    </h5>
+
+</div>
+
+                <p class="text-muted mb-0">
+                    View your personal information and
+                    access your account settings easily.
+                </p>
+            </div>
+        </div>
+    </div>
+
+</div>
 </div>
