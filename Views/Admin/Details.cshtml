@@ -10,12 +10,11 @@
 
     <!-- HEADER -->
     <div class="mb-8">
-        <p class="text-xs font-bold uppercase tracking-widest mb-2"
-           style="color:#2563A6;">
+        <p class="text-xs font-bold uppercase tracking-widest mb-2 admin-section-label">
             EWALLET ADMIN
         </p>
 
-        <h1 class="text-3xl font-bold" style="color:#142D50;">
+        <h1 class="text-3xl font-bold admin-heading">
             Account Details
         </h1>
 
@@ -24,6 +23,7 @@
         </p>
     </div>
 
+    <!-- ERROR MESSAGE -->
     @if (TempData["Error"] != null)
     {
         <div class="bg-red-50 border border-red-200 text-red-700
@@ -33,9 +33,7 @@
     }
 
     <!-- BALANCE CARD -->
-    <div class="rounded-2xl p-6 mb-6 text-white"
-         style="background:linear-gradient(135deg,#142D50,#2563A6);
-                box-shadow:0 16px 35px rgba(20,45,80,.15);">
+    <div class="rounded-2xl p-6 mb-6 text-white admin-balance-card">
 
         <p class="text-sm mb-3 text-blue-100">
             Available Balance
@@ -53,6 +51,7 @@
                 <p class="text-sm text-blue-100 mb-1">
                     Account Number
                 </p>
+
                 <p class="font-semibold break-all">
                     @Model.NumeroCompte
                 </p>
@@ -88,42 +87,50 @@
         </div>
     </div>
 
-    <!-- INFORMATION -->
+    <!-- ACCOUNT INFORMATION AND OWNER -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
 
         <!-- ACCOUNT INFORMATION -->
-        <div class="bg-white rounded-2xl p-6"
-             style="border:1px solid #EDF1F6;
-                    box-shadow:0 5px 20px rgba(20,45,80,.06);">
+        <div class="bg-white rounded-2xl p-6 admin-details-card">
 
-            <h2 class="text-xl font-bold mb-6" style="color:#142D50;">
+            <h2 class="text-xl font-bold mb-6 admin-heading">
                 Account Information
             </h2>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
 
                 <div>
-                    <p class="text-sm text-gray-500 mb-1">Account ID</p>
+                    <p class="text-sm text-gray-500 mb-1">
+                        Account ID
+                    </p>
                     <p class="font-semibold">@Model.IdAccount</p>
                 </div>
 
                 <div>
-                    <p class="text-sm text-gray-500 mb-1">User ID</p>
+                    <p class="text-sm text-gray-500 mb-1">
+                        User ID
+                    </p>
                     <p class="font-semibold">@Model.IdUser</p>
                 </div>
 
                 <div>
-                    <p class="text-sm text-gray-500 mb-1">Account Type</p>
+                    <p class="text-sm text-gray-500 mb-1">
+                        Account Type
+                    </p>
                     <p class="font-semibold">@Model.TypeAccount</p>
                 </div>
 
                 <div>
-                    <p class="text-sm text-gray-500 mb-1">Currency</p>
+                    <p class="text-sm text-gray-500 mb-1">
+                        Currency
+                    </p>
                     <p class="font-semibold">@Model.Devise</p>
                 </div>
 
                 <div>
-                    <p class="text-sm text-gray-500 mb-1">Creation Date</p>
+                    <p class="text-sm text-gray-500 mb-1">
+                        Creation Date
+                    </p>
                     <p class="font-semibold">
                         @Model.DateCreation.ToString("dd/MM/yyyy")
                     </p>
@@ -133,51 +140,58 @@
         </div>
 
         <!-- ACCOUNT OWNER -->
-        <div class="bg-white rounded-2xl p-6"
-             style="border:1px solid #EDF1F6;
-                    box-shadow:0 5px 20px rgba(20,45,80,.06);">
+        <div class="bg-white rounded-2xl p-6 admin-details-card">
 
-            <h2 class="text-xl font-bold mb-6" style="color:#142D50;">
+            <h2 class="text-xl font-bold mb-6 admin-heading">
                 Account Owner
             </h2>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
 
                 <div>
-                    <p class="text-sm text-gray-500 mb-1">First Name</p>
+                    <p class="text-sm text-gray-500 mb-1">
+                        First Name
+                    </p>
                     <p class="font-semibold">@Model.Prenom</p>
                 </div>
 
                 <div>
-                    <p class="text-sm text-gray-500 mb-1">Last Name</p>
+                    <p class="text-sm text-gray-500 mb-1">
+                        Last Name
+                    </p>
                     <p class="font-semibold">@Model.Nom</p>
                 </div>
 
                 <div class="sm:col-span-2">
-                    <p class="text-sm text-gray-500 mb-1">Email</p>
-                    <p class="font-semibold break-all">@Model.Email</p>
+                    <p class="text-sm text-gray-500 mb-1">
+                        Email
+                    </p>
+                    <p class="font-semibold break-all">
+                        @Model.Email
+                    </p>
                 </div>
-       <!-- PHONE NUMBER -->
+
+                <!-- PHONE NUMBER -->
                 <div class="sm:col-span-2">
                     <p class="text-sm text-gray-500 mb-1">
-                       Phone Number
+                        Phone Number
                     </p>
 
                     <p class="font-semibold">
                         @(string.IsNullOrWhiteSpace(Model.PhoneNumber)
-                         ? "Not provided"
-                         : Model.PhoneNumber)
+                            ? "Not provided"
+                            : Model.PhoneNumber)
                     </p>
-              </div>
+                </div>
+
             </div>
         </div>
     </div>
-    <!-- STATUS MANAGEMENT -->
-    <div class="bg-white rounded-2xl p-6 mb-6"
-         style="border:1px solid #EDF1F6;
-                box-shadow:0 5px 20px rgba(20,45,80,.06);">
 
-        <h2 class="text-xl font-bold mb-2" style="color:#142D50;">
+    <!-- STATUS MANAGEMENT -->
+    <div class="bg-white rounded-2xl p-6 mb-6 admin-details-card">
+
+        <h2 class="text-xl font-bold mb-2 admin-heading">
             Account Status Management
         </h2>
 
@@ -231,9 +245,7 @@
     </div>
 
     <!-- DANGER ZONE -->
-    <div class="bg-white rounded-2xl p-6 mb-6"
-         style="border:1px solid #FECACA;
-                box-shadow:0 5px 20px rgba(20,45,80,.04);">
+    <div class="bg-white rounded-2xl p-6 mb-6 admin-danger-card">
 
         <h2 class="text-xl font-bold text-red-700 mb-2">
             Danger Zone
@@ -265,11 +277,10 @@
         </form>
     </div>
 
-    <!-- BACK -->
+    <!-- BACK TO ACCOUNTS -->
     <a asp-controller="Admin"
        asp-action="Accounts"
-       class="inline-block px-5 py-3 rounded-xl font-semibold"
-       style="background:#EAF2FB;color:#2563A6;">
+       class="inline-block px-5 py-3 rounded-xl font-semibold admin-back-btn">
         ← Back to Accounts
     </a>
 

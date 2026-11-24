@@ -3,67 +3,7 @@
     ViewData["Title"] = "Privacy Policy";
 }
 
-<style>
-    .privacy-page {
-        max-width: 1050px;
-        margin: 45px auto 70px;
-        color: #142D50;
-    }
-
-    .privacy-header {
-        text-align: center;
-        margin-bottom: 35px;
-    }
-
-    .privacy-tag {
-        color: #2563A6;
-        font-size: 12px;
-        font-weight: 700;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-    }
-
-    .privacy-title {
-        font-size: clamp(30px, 5vw, 42px);
-        font-weight: 800;
-        margin: 12px 0;
-    }
-
-    .privacy-subtitle {
-        color: #64748B;
-        max-width: 650px;
-        margin: 0 auto;
-        line-height: 1.8;
-    }
-
-    .privacy-card {
-        background: #FFFFFF;
-        border: 1px solid #E8EEF5;
-        border-radius: 18px;
-        padding: 28px;
-        margin-bottom: 20px;
-        box-shadow: 0 6px 24px rgba(20, 45, 80, 0.05);
-    }
-
-    .privacy-card h2 {
-        font-size: 20px;
-        font-weight: 700;
-        margin-bottom: 15px;
-    }
-
-    .privacy-card p,
-    .privacy-card li {
-        color: #64748B;
-        line-height: 1.85;
-        font-size: 15px;
-    }
-
-    .privacy-card ul {
-        padding-left: 22px;
-        margin-bottom: 0;
-    }
-
-</style>
+<link rel="stylesheet" href="~/css/privacy.css" asp-append-version="true" />
 
 <div class="privacy-page">
 
@@ -181,15 +121,11 @@
     </section>
 
     <!-- BACK BUTTON -->
-    <div class="text-center mt-4">
-        <a asp-controller="Home"
-           asp-action="Index"
-           class="btn px-4 py-2"
-           style="background:#142D50;
-                  color:white;
-                  border-radius:10px;">
+      <div class="text-center mt-4">
+         <a asp-controller="Home"
+            asp-action="Index"
+            class="btn px-4 py-2 privacy-back-btn">
             Back to Home
-        </a>
-    </div>
-
+         </a>
+     </div>
 </div>

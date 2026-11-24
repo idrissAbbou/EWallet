@@ -1,0 +1,87 @@
+
+/* EWallet Admin - Shared Styles */
+
+.admin-section-label {
+    color: #2563A6;
+}
+
+.admin-heading,
+.admin-text-primary {
+    color: #142D50;
+}
+
+.admin-card {
+    border: 1px solid #EDF1F6;
+    box-shadow: 0 5px 20px rgba(20, 45, 80, 0.06);
+}
+
+.admin-info-badge {
+    background-color: #EAF2FB;
+    color: #2563A6;
+}
+
+.admin-table-head {
+    background-color: #F4F7FB;
+    color: #142D50;
+}
+
+.admin-primary-btn {
+    background-color: #2563A6;
+    color: #FFFFFF;
+}
+
+.admin-primary-btn:hover {
+    background-color: #1D5088;
+    color: #FFFFFF;
+}
+
+
+/* Account Details */
+
+.admin-balance-card {
+    background: linear-gradient(135deg, #142D50, #2563A6);
+    box-shadow: 0 16px 35px rgba(20, 45, 80, 0.15);
+}
+
+.admin-details-card {
+    border: 1px solid #EDF1F6;
+    box-shadow: 0 5px 20px rgba(20, 45, 80, 0.06);
+}
+
+.admin-danger-card {
+    border: 1px solid #FECACA;
+    box-shadow: 0 5px 20px rgba(20, 45, 80, 0.04);
+}
+
+.admin-back-btn {
+    background-color: #EAF2FB;
+    color: #2563A6;
+}
+
+.admin-back-btn:hover {
+    background-color: #D9EAFB;
+    color: #1D5088;
+}
+
+/* Admin Layout */
+
+.admin-body {
+    background-color: #F8FAFD;
+}
+
+.admin-brand {
+    color: #142D50;
+    font-size: 24px;
+    letter-spacing: -0.5px;
+}
+
+.admin-nav-link,
+.admin-user-name,
+.admin-logout {
+    color: #142D50;
+}
+
+.admin-nav-link:hover,
+.admin-logout:hover {
+    color: #2563A6;
+}

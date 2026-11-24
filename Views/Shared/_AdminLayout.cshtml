@@ -1,6 +1,11 @@
+
 @using EWallet.Models
 @using Microsoft.AspNetCore.Identity
 @inject UserManager<ApplicationUser> UserManager
+
+@{
+    var adminUser = await UserManager.GetUserAsync(User);
+}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -11,9 +16,10 @@
     <title>@ViewData["Title"] - EWallet Admin</title>
 
     <script src="https://cdn.jsdelivr.net/npm/@@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
 </head>
 
-<body class="min-h-screen" style="background: #F8FAFD;">
+<body class="min-h-screen admin-body">
 
     <!-- ADMIN NAVBAR -->
     <header class="bg-white border-b border-gray-200 shadow-sm">
@@ -26,26 +32,21 @@
                 <!-- BRAND -->
                 <a asp-controller="Home"
                    asp-action="Index"
-                   class="font-bold mr-3"
-                   style="color: #142D50;
-                          font-size: 24px;
-                          letter-spacing: -0.5px;">
+                   class="font-bold mr-3 admin-brand">
                     EWallet
                 </a>
 
                 <!-- HOME -->
                 <a asp-controller="Home"
                    asp-action="Index"
-                   class="px-4 py-2 rounded-xl font-medium transition-colors"
-                   style="color: #142D50;">
+                   class="px-4 py-2 rounded-xl font-medium transition-colors admin-nav-link">
                     Home
                 </a>
 
                 <!-- ACCOUNTS -->
                 <a asp-controller="Admin"
                    asp-action="Accounts"
-                   class="px-4 py-2 rounded-xl font-medium transition-colors"
-                   style="color: #142D50;">
+                   class="px-4 py-2 rounded-xl font-medium transition-colors admin-nav-link">
                     Accounts
                 </a>
 
@@ -55,20 +56,15 @@
             <div class="flex flex-wrap items-center gap-3">
 
                 <!-- ADMIN NAME -->
-                <span class="px-3 py-2 font-medium"
-                      style="color: #142D50;">
-                    @{
-                       var adminUser = await UserManager.GetUserAsync(User);
-                     }
-
+                <span class="px-3 py-2 font-medium admin-user-name">
                     @if (adminUser != null)
-                     {
-                       <text>Hello, @adminUser.Prenom @adminUser.Nom</text>
-                     }
-                       else
-                     {
-                     <text>Hello, @User.Identity?.Name</text>
-                     }
+                    {
+                        <text>Hello, @adminUser.Prenom @adminUser.Nom</text>
+                    }
+                    else
+                    {
+                        <text>Hello, @User.Identity?.Name</text>
+                    }
                 </span>
 
                 <!-- LOGOUT -->
@@ -78,8 +74,7 @@
                       method="post">
 
                     <button type="submit"
-                            class="px-4 py-2 rounded-xl font-medium transition-colors"
-                            style="color: #142D50;">
+                            class="px-4 py-2 rounded-xl font-medium transition-colors admin-logout">
                         Logout
                     </button>
 
