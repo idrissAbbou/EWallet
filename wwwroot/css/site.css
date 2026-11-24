@@ -1,31 +1,393 @@
+
+/* =========================================
+   1. GLOBAL
+========================================= */
+
 html {
-  font-size: 14px;
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+    html {
+        font-size: 16px;
+    }
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
 
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white,
+                0 0 0 0.25rem #258cfb;
 }
 
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+.form-floating > .form-control-plaintext::placeholder,
+.form-floating > .form-control::placeholder {
+    color: var(--bs-secondary-color);
+    text-align: end;
+}
+
+.form-floating > .form-control-plaintext:focus::placeholder,
+.form-floating > .form-control:focus::placeholder {
+    text-align: start;
+}
+
+
+/* =========================================
+   2. EWALLET NAVBAR
+========================================= */
+
+.navbar .nav-link {
+    color: #142D50 !important;
+    font-weight: 500;
+    padding: 10px 14px !important;
+    border-radius: 10px;
+    transition: background-color .2s ease,
+                color .2s ease;
+}
+
+.navbar .nav-link:hover {
+    color: #2563A6 !important;
+    background-color: #EAF2FB;
+}
+
+.navbar .navbar-brand:hover {
+    color: #2563A6 !important;
+}
+
+
+/* =========================================
+   3. CLIENT WALLET BACKGROUND
+========================================= */
+
+/* Full page background */
+body:has(.wallet-dashboard) {
+    background-color: #F8FAFD;
+}
+
+/* Keep the navbar white */
+body:has(.wallet-dashboard) .navbar {
+    background-color: #FFFFFF !important;
+}
+
+
+/* =========================================
+   4. ACCOUNT SETTINGS - GENERAL
+========================================= */
+
+/* Hide Personal Data navigation link */
+a[href*="/Identity/Account/Manage/PersonalData"] {
+    display: none !important;
+}
+
+/* Common headings on all Manage pages */
+body:has(#two-factor) h1 {
+    color: #142D50;
+    font-size: 34px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+body:has(#two-factor) h2 {
+    color: #2563A6;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+body:has(#two-factor) hr {
+    border-color: #E6EDF5;
+    opacity: 1;
+    margin-bottom: 22px;
+}
+
+/* Form section headings */
+body:has(#two-factor) .col-lg-9 h3 {
+    color: #142D50;
+    font-size: 27px;
+    font-weight: 600;
+    margin-bottom: 14px;
+}
+
+
+/* =========================================
+   5. ACCOUNT SETTINGS - LEFT MENU
+========================================= */
+
+body:has(#two-factor) .nav-pills .nav-link {
+    color: #142D50;
+    font-weight: 500;
+    border-radius: 12px;
+    padding: 12px 18px;
+    margin-bottom: 6px;
+}
+
+body:has(#two-factor) .nav-pills .nav-link.active {
+    background-color: #2563A6;
+    color: #FFFFFF;
+    font-weight: 600;
+}
+
+body:has(#two-factor) .nav-pills .nav-link:hover:not(.active) {
+    background-color: #EAF2FB;
+    color: #2563A6;
+}
+
+
+/* =========================================
+   6. ACCOUNT SETTINGS - LAYOUT
+========================================= */
+
+@media (min-width: 992px) {
+
+    body:has(#two-factor) .row > .col-lg-3 {
+        flex: 0 0 260px;
+        max-width: 260px;
+    }
+
+    body:has(#two-factor) .row > .col-lg-9 {
+        flex: 1 1 0;
+        max-width: calc(100% - 260px);
+        min-width: 0;
+        padding-left: 24px;
+    }
+}
+
+
+/* =========================================
+   7. PROFILE, EMAIL AND PASSWORD CARDS
+========================================= */
+
+#profile-form,
+#email-form,
+#change-password-form {
+    background-color: #FFFFFF;
+    border: 1px solid #EDF1F6;
+    border-radius: 18px;
+    padding: 22px;
+    width: 100%;
+    max-width: 520px;
+    box-shadow: 0 5px 20px rgba(20, 45, 80, .06);
+}
+
+#profile-form .form-control,
+#email-form .form-control,
+#change-password-form .form-control {
+    border-radius: 10px;
+}
+
+
+/* =========================================
+   8. PROFILE BUTTON
+========================================= */
+
+#profile-form button[type="submit"] {
+    background-color: #2563A6;
+    border-color: #2563A6;
+    color: #FFFFFF;
+    border-radius: 12px;
+    font-weight: 600;
+}
+
+#profile-form button[type="submit"]:hover {
+    background-color: #142D50;
+    border-color: #142D50;
+}
+
+
+/* =========================================
+   9. EMAIL SETTINGS
+========================================= */
+
+#change-email-button {
+    background-color: #2563A6;
+    border-color: #2563A6;
+    color: #FFFFFF;
+    border-radius: 12px;
+    font-weight: 600;
+}
+
+#change-email-button:hover {
+    background-color: #142D50;
+    border-color: #142D50;
+}
+
+/* Verification link stays a link */
+#email-form #email-verification {
+    background: transparent;
+    border: none;
+    color: #2563A6;
+    padding: 6px 0;
+    font-weight: 500;
+    text-decoration: underline;
+    box-shadow: none;
+}
+
+#email-form #email-verification:hover {
+    color: #142D50;
+    background: transparent;
+}
+
+
+/* =========================================
+   10. PASSWORD SETTINGS
+========================================= */
+
+#change-password-form button[type="submit"] {
+    background-color: #2563A6;
+    border-color: #2563A6;
+    color: #FFFFFF;
+    border-radius: 12px;
+    font-weight: 600;
+}
+
+#change-password-form button[type="submit"]:hover {
+    background-color: #142D50;
+    border-color: #142D50;
+}
+
+
+/* =========================================
+   11. TWO-FACTOR AUTHENTICATION
+========================================= */
+
+body:has(#enable-authenticator) .col-lg-9 {
+    background-color: #FFFFFF;
+    border: 1px solid #EDF1F6;
+    border-radius: 18px;
+    padding: 24px;
+    box-shadow: 0 5px 20px rgba(20, 45, 80, .06);
+}
+
+body:has(#enable-authenticator) .col-lg-9 h4 {
+    color: #2563A6;
+    font-size: 20px;
+    margin-bottom: 18px;
+}
+
+#enable-authenticator {
+    background-color: #2563A6;
+    border-color: #2563A6;
+    color: #FFFFFF;
+    border-radius: 12px;
+    padding: 12px 18px;
+    font-weight: 600;
+}
+
+#enable-authenticator:hover {
+    background-color: #142D50;
+    border-color: #142D50;
+}
+
+#reset-authenticator {
+    background-color: #DC3545;
+    border-color: #DC3545;
+    color: #FFFFFF;
+    border-radius: 12px;
+    padding: 12px 18px;
+    font-weight: 600;
+}
+
+#reset-authenticator:hover {
+    background-color: #B02A37;
+    border-color: #B02A37;
+}
+
+
+/* =========================================
+   12. CONFIGURE AUTHENTICATOR
+========================================= */
+
+#send-code {
+    background-color: #FFFFFF;
+    border: 1px solid #EDF1F6;
+    border-radius: 18px;
+    padding: 22px;
+    width: 100%;
+    max-width: 520px;
+    box-shadow: 0 5px 20px rgba(20, 45, 80, .06);
+}
+
+#send-code .form-control {
+    border-radius: 10px;
+}
+
+#send-code button[type="submit"] {
+    background-color: #2563A6;
+    border-color: #2563A6;
+    color: #FFFFFF;
+    border-radius: 12px;
+    font-weight: 600;
+}
+
+#send-code button[type="submit"]:hover {
+    background-color: #142D50;
+    border-color: #142D50;
+}
+
+
+/* =========================================
+   13. RESET AUTHENTICATOR
+========================================= */
+
+#reset-authenticator-form {
+    background-color: #FFFFFF;
+    border: 1px solid #EDF1F6;
+    border-radius: 18px;
+    padding: 22px;
+    width: fit-content;
+    max-width: 100%;
+    box-shadow: 0 5px 20px rgba(20, 45, 80, .06);
+}
+
+#reset-authenticator-button {
+    background-color: #DC3545;
+    border-color: #DC3545;
+    color: #FFFFFF;
+    border-radius: 12px;
+    padding: 12px 20px;
+    font-weight: 600;
+}
+
+#reset-authenticator-button:hover {
+    background-color: #B02A37;
+    border-color: #B02A37;
+}
+
+
+/* =========================================
+   14. MOBILE RESPONSIVENESS
+========================================= */
+
+@media (max-width: 767px) {
+
+    body:has(#two-factor) h1 {
+        font-size: 28px;
+    }
+
+    body:has(#two-factor) h2 {
+        font-size: 18px;
+    }
+
+    body:has(#two-factor) .col-lg-9 h3 {
+        font-size: 23px;
+    }
+
+    #profile-form,
+    #email-form,
+    #change-password-form,
+    #send-code {
+        padding: 18px;
+    }
+
+    #enable-authenticator,
+    #reset-authenticator {
+        margin-bottom: 8px;
+    }
 }

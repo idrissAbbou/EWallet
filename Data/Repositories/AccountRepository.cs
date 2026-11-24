@@ -34,7 +34,16 @@ public class AccountRepository
     command.Parameters.AddWithValue("@UserId", userId);
     command.Parameters.AddWithValue("@AccountNumber", accountNumber);
 
-    return (int)await command.ExecuteScalarAsync();
+    object? result = await command.ExecuteScalarAsync();
+
+      if (result is not int accountId)
+   {
+    throw new InvalidOperationException(
+        "Failed to create account or retrieve its ID.");
+   }
+
+    return accountId;
+
   }
 
   public async Task<Account?> GetByUserIdAsync(int userId)
