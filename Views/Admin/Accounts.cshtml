@@ -4,59 +4,222 @@
 @{
     ViewData["Title"] = "Accounts Management";
     Layout = "_AdminLayout";
+
+    int currentPage = ViewBag.CurrentPage;
+    int totalPages = ViewBag.TotalPages;
 }
 
-@if (TempData["Success"] != null)
-{
-    <div class="bg-green-100 border border-green-400 text-green-800
-                px-4 py-3 rounded-lg mb-4">
-        @TempData["Success"]
+<div class="p-4 md:p-6">
+
+    <!-- PAGE HEADER -->
+    <div class="mb-8">
+
+        <p class="text-xs font-bold uppercase tracking-widest mb-2 admin-section-label">
+            EWALLET ADMIN
+        </p>
+
+        <h1 class="text-3xl font-bold admin-heading">
+            Accounts Management
+        </h1>
+
+        <p class="text-gray-500 mt-2">
+            Manage and view all EWallet accounts.
+        </p>
+
     </div>
-}
 
-<div class="p-6">
-    <h1 class="text-2xl font-bold text-gray-800">
-        Accounts Management
-    </h1>
+    <!-- SUCCESS MESSAGE -->
+    @if (TempData["Success"] != null)
+    {
+        <div class="bg-green-50 border border-green-200 text-green-800
+                    px-5 py-4 rounded-xl mb-6">
+            @TempData["Success"]
+        </div>
+    }
 
-    <p class="text-gray-500 mt-2">
-        Manage and view all EWallet accounts.
-    </p>
-</div>
+    <!-- ACCOUNTS CARD -->
+    <div class="bg-white rounded-2xl overflow-hidden admin-card">
 
-<div class="p-6">
-    <div class="overflow-x-auto rounded-lg border border-gray-200">
-        <table class="w-full text-left text-sm">
-            <thead class="bg-gray-100 text-gray-700">
-                <tr>
-                    <th class="p-3">Account Number</th>
-                    <th class="p-3">Balance</th>
-                    <th class="p-3">Currency</th>
-                    <th class="p-3">Status</th>
-                    <th class="p-3">Creation Date</th>
-                    <th class="p-3">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var account in Model)
-                {
-                    <tr class="border-t border-gray-200">
-                        <td class="p-3">@account.NumeroCompte</td>
-                        <td class="p-3">@account.Solde</td>
-                        <td class="p-3">@account.Devise</td>
-                        <td class="p-3">@account.Statut</td>
-                        <td class="p-3">@account.DateCreation.ToString("dd/MM/yyyy")</td>
-                        <td class="p-3">
-                          <a asp-controller="Admin"
-                             asp-action="Details"
-                             asp-route-id="@account.IdAccount"
-                            class="text-blue-600 hover:underline font-medium">
-                             Details
-                          </a>
-                        </td>
+        <!-- CARD HEADER -->
+        <div class="px-6 py-5 border-b border-gray-100
+                    flex flex-wrap items-center justify-between gap-3">
+
+            <div>
+                <h2 class="text-xl font-bold admin-heading">
+                    All Accounts
+                </h2>
+
+                <p class="text-sm text-gray-500 mt-1">
+                    List of registered wallet accounts
+                </p>
+            </div>
+
+            <span class="px-4 py-2 rounded-full text-sm font-semibold admin-info-badge">
+                @Model.Count Accounts on this page
+            </span>
+
+        </div>
+
+        <!-- TABLE -->
+        <div class="overflow-x-auto">
+
+            <table class="w-full text-left text-sm">
+
+                <thead class="admin-table-head">
+                    <tr>
+                        <th class="px-6 py-4 font-semibold whitespace-nowrap">
+                            Account Number
+                        </th>
+
+                        <th class="px-6 py-4 font-semibold">
+                            Balance
+                        </th>
+
+                        <th class="px-6 py-4 font-semibold">
+                            Currency
+                        </th>
+
+                        <th class="px-6 py-4 font-semibold">
+                            Status
+                        </th>
+
+                        <th class="px-6 py-4 font-semibold whitespace-nowrap">
+                            Creation Date
+                        </th>
+
+                        <th class="px-6 py-4 font-semibold">
+                            Actions
+                        </th>
                     </tr>
+                </thead>
+
+                <tbody class="divide-y divide-gray-100">
+
+                    @foreach (var account in Model)
+                    {
+                        <tr class="hover:bg-gray-50 transition-colors">
+
+                            <!-- ACCOUNT NUMBER -->
+                            <td class="px-6 py-4 font-semibold admin-text-primary">
+                                @account.NumeroCompte
+                            </td>
+
+                            <!-- BALANCE -->
+                            <td class="px-6 py-4 font-semibold whitespace-nowrap admin-text-primary">
+                                @account.Solde.ToString("N2")
+                            </td>
+
+                            <!-- CURRENCY -->
+                            <td class="px-6 py-4 text-gray-600">
+                                @account.Devise
+                            </td>
+
+                            <!-- STATUS -->
+                            <td class="px-6 py-4">
+
+                                @if (account.Statut == "Active")
+                                {
+                                    <span class="inline-block px-3 py-1 rounded-full
+                                                 bg-green-100 text-green-700
+                                                 text-xs font-semibold">
+                                        Active
+                                    </span>
+                                }
+                                else if (account.Statut == "Blocked")
+                                {
+                                    <span class="inline-block px-3 py-1 rounded-full
+                                                 bg-red-100 text-red-700
+                                                 text-xs font-semibold">
+                                        Blocked
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="inline-block px-3 py-1 rounded-full
+                                                 bg-gray-100 text-gray-700
+                                                 text-xs font-semibold">
+                                        @account.Statut
+                                    </span>
+                                }
+
+                            </td>
+
+                            <!-- DATE -->
+                            <td class="px-6 py-4 text-gray-600 whitespace-nowrap">
+                                @account.DateCreation.ToString("dd/MM/yyyy")
+                            </td>
+
+                            <!-- ACTION -->
+                            <td class="px-6 py-4">
+
+                                <a asp-controller="Admin"
+                                   asp-action="Details"
+                                   asp-route-id="@account.IdAccount"
+                                   class="inline-block px-4 py-2 rounded-lg
+                                          text-white text-sm font-semibold
+                                          hover:opacity-90 transition-opacity
+                                          admin-primary-btn">
+                                    Details
+                                </a>
+
+                            </td>
+
+                        </tr>
+                    }
+
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="6"
+                                class="px-6 py-12 text-center text-gray-500">
+                                No accounts found.
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <!-- PAGINATION -->
+        @if (totalPages > 1)
+        {
+            <div class="px-6 py-5 border-t border-gray-100
+                        flex flex-wrap justify-center items-center gap-3">
+
+                @if (currentPage > 1)
+                {
+                    <a asp-controller="Admin"
+                       asp-action="Accounts"
+                       asp-route-page="@(currentPage - 1)"
+                       class="px-5 py-2 rounded-xl font-semibold
+                              border border-gray-200 text-gray-700
+                              hover:bg-gray-100 transition-colors">
+                        Previous
+                    </a>
                 }
-            </tbody>
-        </table>
+
+                <span class="px-4 py-2 rounded-xl text-sm font-semibold admin-info-badge">
+                    Page @currentPage of @totalPages
+                </span>
+
+                @if (currentPage < totalPages)
+                {
+                    <a asp-controller="Admin"
+                       asp-action="Accounts"
+                       asp-route-page="@(currentPage + 1)"
+                       class="px-5 py-2 rounded-xl font-semibold
+                              hover:opacity-90 transition-opacity
+                              admin-primary-btn">
+                        Next
+                    </a>
+                }
+
+            </div>
+        }
+
     </div>
+
 </div>

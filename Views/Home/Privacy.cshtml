@@ -1,6 +1,131 @@
-﻿@{
+﻿
+@{
     ViewData["Title"] = "Privacy Policy";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<link rel="stylesheet" href="~/css/privacy.css" asp-append-version="true" />
+
+<div class="privacy-page">
+
+    <!-- PAGE HEADER -->
+    <div class="privacy-header">
+        <span class="privacy-tag">EWALLET • PRIVACY & SECURITY</span>
+
+        <h1 class="privacy-title">Privacy Policy</h1>
+
+        <p class="privacy-subtitle">
+            Your privacy matters to us. Learn how EWallet
+            handles personal information and supports
+            the protection of your account data.
+        </p>
+    </div>
+
+    <!-- INTRODUCTION -->
+    <section class="privacy-card">
+        <h2>01. Introduction</h2>
+        <p>
+            EWallet is a digital wallet application designed
+            to help users manage their accounts and view
+            their wallet information.
+        </p>
+        <p class="mb-0">
+            This Privacy Policy explains the types of
+            information the application may process
+            and how that information is intended to be used.
+        </p>
+    </section>
+
+    <!-- DATA COLLECTION -->
+    <section class="privacy-card">
+        <h2>02. Information We Collect</h2>
+        <p>
+            Depending on the features used, EWallet
+            may process the following information:
+        </p>
+
+        <ul>
+            <li>First name and last name</li>
+            <li>Email address and phone number</li>
+            <li>Account identifiers and account status</li>
+            <li>Wallet balance and currency</li>
+            <li>Account creation information</li>
+        </ul>
+    </section>
+
+    <!-- DATA USAGE -->
+    <section class="privacy-card">
+        <h2>03. How We Use Your Information</h2>
+        <p>
+            Account information is used to support
+            the application's core functionality,
+            including:
+        </p>
+
+        <ul>
+            <li>Managing user accounts</li>
+            <li>Displaying wallet information</li>
+            <li>Supporting account authentication</li>
+            <li>Enabling authorized administrative operations</li>
+            <li>Maintaining the application's reliability and security</li>
+        </ul>
+    </section>
+
+    <!-- SECURITY -->
+    <section class="privacy-card">
+        <h2>04. Data Security</h2>
+        <p class="mb-0">
+            Protecting account information is an important
+            consideration in the design and operation
+            of EWallet. Security measures should include
+            appropriate authentication, authorization,
+            and safeguards against unauthorized access.
+            No application can guarantee absolute security.
+        </p>
+    </section>
+
+    <!-- COOKIES -->
+    <section class="privacy-card">
+        <h2>05. Cookies and Authentication</h2>
+        <p class="mb-0">
+            EWallet may use cookies or similar technologies
+            to maintain authenticated sessions and support
+            essential application functionality.
+            The specific cookies used depend on the
+            application's configuration.
+        </p>
+    </section>
+
+    <!-- USER RIGHTS -->
+    <section class="privacy-card">
+        <h2>06. Your Privacy Rights</h2>
+        <p class="mb-0">
+            Depending on applicable law, users may have
+            rights relating to access, correction, or
+            deletion of their personal information.
+            Requests should be handled according to
+            the application's operational procedures
+            and applicable legal requirements.
+        </p>
+    </section>
+
+    <!-- UPDATES -->
+    <section class="privacy-card">
+        <h2>07. Changes to This Policy</h2>
+        <p class="mb-0">
+            This Privacy Policy may be updated when
+            EWallet features, data practices, or
+            applicable requirements change.
+            The published policy should reflect
+            the application's actual data practices.
+        </p>
+    </section>
+
+    <!-- BACK BUTTON -->
+      <div class="text-center mt-4">
+         <a asp-controller="Home"
+            asp-action="Index"
+            class="btn px-4 py-2 privacy-back-btn">
+            Back to Home
+         </a>
+     </div>
+</div>
