@@ -19,16 +19,30 @@ public class AdminController : Controller
         return Content($"Welcome Admin: {User.Identity?.Name}");
     }
 
-
-    public async Task<IActionResult> Accounts()
-
+    public async Task<IActionResult> Accounts(int page = 1)
     {
+    const int pageSize = 10;
 
-      var accounts = await _accountRepository.GetAllAsync();
- 
-        return View(accounts);
+    if (page < 1)
+        page = 1;
 
-    }
+    int totalAccounts = await _accountRepository.GetTotalCountAsync();
+
+    int totalPages = (int)Math.Ceiling(
+        totalAccounts / (double)pageSize);
+
+    if (totalPages > 0 && page > totalPages)
+        page = totalPages;
+
+    var accounts = await _accountRepository.GetAllAsync(page, pageSize);
+
+    ViewBag.CurrentPage = page;
+    ViewBag.TotalPages = totalPages;
+    ViewBag.TotalAccounts = totalAccounts;
+
+    return View(accounts);
+ }
+
 
     public async Task<IActionResult> Details(int id)
     {

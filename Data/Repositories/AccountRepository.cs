@@ -34,7 +34,17 @@ public class AccountRepository
     command.Parameters.AddWithValue("@UserId", userId);
     command.Parameters.AddWithValue("@AccountNumber", accountNumber);
 
-    return (int)await command.ExecuteScalarAsync();
+    
+    object? result = await command.ExecuteScalarAsync();
+
+     if (result is not int accountId)
+    {
+    throw new InvalidOperationException(
+        "Failed to create account or retrieve its ID.");
+    }
+
+    return accountId;
+
   }
 
   public async Task<Account?> GetByUserIdAsync(int userId)
@@ -80,21 +90,37 @@ public class AccountRepository
       Statut = reader.GetString(7)
     };
   }
-  public async Task<List<Account>> GetAllAsync()
-  {
+  
+   public async Task<List<Account>> GetAllAsync(int page = 1, int pageSize = 10)
+   {
     var accounts = new List<Account>();
-    const string query = @" 
-         SELECT id_account, id_user, numero_compte,
-           type_account, solde, devise,
-           date_creation, statut
+
+    if (page < 1)
+        page = 1;
+
+    if (pageSize < 1)
+        pageSize = 10;
+
+    const string query = @"
+        SELECT id_account, id_user, numero_compte,
+               type_account, solde, devise,
+               date_creation, statut
         FROM dbo.Accounts
         WHERE is_deleted = 0
-        ORDER BY id_account DESC";
+        ORDER BY id_account DESC
+        OFFSET @Offset ROWS
+        FETCH NEXT @PageSize ROWS ONLY";
+
+    int offset = (page - 1) * pageSize;
 
     await using var connection = _connectionFactory.CreateConnection();
     await connection.OpenAsync();
 
     await using var command = new SqlCommand(query, connection);
+
+    command.Parameters.AddWithValue("@Offset", offset);
+    command.Parameters.AddWithValue("@PageSize", pageSize);
+
     await using var reader = await command.ExecuteReaderAsync();
 
     while (await reader.ReadAsync())
@@ -113,7 +139,7 @@ public class AccountRepository
     }
 
     return accounts;
-  }
+}
 
   public async Task<Account?> GetByIdAsync(int accountId)
   {
@@ -232,5 +258,24 @@ public class AccountRepository
     int affectedRows = await command.ExecuteNonQueryAsync();
 
     return affectedRows > 0;
+}
+
+  public async Task<int> GetTotalCountAsync()
+ {
+    const string query = @"
+        SELECT COUNT(*)
+        FROM dbo.Accounts
+        WHERE is_deleted = 0";
+
+    await using var connection =
+        _connectionFactory.CreateConnection();
+
+    await connection.OpenAsync();
+
+    await using var command =
+        new SqlCommand(query, connection);
+
+    return Convert.ToInt32(
+        await command.ExecuteScalarAsync());
 }
 }
